@@ -53,7 +53,7 @@ $result=mysqli_query($conn,"SELECT * FROM baoloi");
             </div>
             <button type="submit" class="btn btn-primary" name="add">Lưu</button>
             <div>
-                <a href="logout.php" class="btn btn-info" role="button">Logout</a>
+                <a href="users-page.php" class="btn btn-info" role="button">Home page</a>
             </div>
         </form>
     </div>
