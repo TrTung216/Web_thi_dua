@@ -18,7 +18,7 @@
     ?>
     <?php
         if(isset($_POST["sua"])){
-            $ten_lop= $_POST['id_lop'];
+            $ten_lop= $_POST['ten_lop'];
             $gio_tot=$_POST['gio_tot'];
             $gio_tb=$_POST['gio_tb'];
             $gio_yeu=$_POST['gio_yeu'];
@@ -34,66 +34,71 @@
             gio_tot =IF($gio_tot IS NOT NULL, $gio_tot, gio_tot)
             WHERE ten_lop = '".$ten_lop."'")){
                 echo "<script>alert('Sửa thành công!');</script>";
-            }else{echo "<script>alert('Sửa thất bại!');</script>";}
+            }
             if($conn -> query("UPDATE thiduatuan SET 
             gio_tb=IF($gio_tb IS NOT NULL, $gio_tb, gio_tb)
             WHERE ten_lop = '".$ten_lop."'")){
                 echo "<script>alert('Sửa thành công!');</script>";
-            }else{echo "<script>alert('Sửa thất bại!');</script>";}
+            }
             if($conn -> query("UPDATE thiduatuan SET 
             gio_yeu=IF($gio_yeu IS NOT NULL,$gio_yeu, gio_yeu)
             WHERE ten_lop = '".$ten_lop."'")){
                 echo "<script>alert('Sửa thành công!');</script>";
-            }else{echo "<script>alert('Sửa thất bại!');</script>";}
+            }
             if($conn -> query("UPDATE thiduatuan SET 
             gio_kem=IF($gio_kem IS NOT NULL,$gio_kem, gio_kem)
             WHERE ten_lop = '".$ten_lop."'")){
                 echo "<script>alert('Sửa thành công!');</script>";
-            }else{echo "<script>alert('Sửa thất bại!');</script>";}
+            }
             if($conn -> query("UPDATE thiduatuan SET 
-            so_diem_gioi=IF($so_diem_gioi, so_diem_gioi)
+            so_diem_gioi =IF($so_diem_gioi IS NOT NULL, $so_diem_gioi, so_diem_gioi)
             WHERE ten_lop = '".$ten_lop."'")){
                 echo "<script>alert('Sửa thành công!');</script>";
-            }else{echo "<script>alert('Sửa thất bại!');</script>";}
+            }
             if($conn -> query("UPDATE thiduatuan SET 
-            so_diem_yeu_kem=IF($so_diem_yeu_kem, so_diem_yeu_kem)
+            so_diem_yeu_kem=IF($so_diem_yeu_kem IS NOT NULL, $so_diem_yeu_kem, so_diem_yeu_kem)
             WHERE ten_lop = '".$ten_lop."'")){
                 echo "<script>alert('Sửa thành công!');</script>";
-            }else{echo "<script>alert('Sửa thất bại!');</script>";}
+            }
             if($conn -> query("UPDATE thiduatuan SET 
-            loi_2diem=IF($loi_2diem IF NOT NULL,$loi_2diem, loi_2diem)
+            loi_2diem=IF($loi_2diem IS NOT NULL,$loi_2diem, loi_2diem)
             WHERE ten_lop = '".$ten_lop."'")){
                 echo "<script>alert('Sửa thành công!');</script>";
-            }else{echo "<script>alert('Sửa thất bại!');</script>";}
+            }
             if($conn -> query("UPDATE thiduatuan SET 
-            loi_5diem=IF($loi_5diem IF NOT NULL,$loi_5diem, loi_5diem)
+            loi_5diem=IF($loi_5diem IS NOT NULL,$loi_5diem, loi_5diem)
             WHERE ten_lop = '".$ten_lop."'")){
                 echo "<script>alert('Sửa thành công!');</script>";
-            }else{echo "<script>alert('Sửa thất bại!');</script>";}
+            }
             if($conn -> query("UPDATE thiduatuan SET 
-            loi_10diem=IF($loi_10diem IF NOT NULL,$loi_10diem, loi_10diem)
+            loi_10diem=IF($loi_10diem IS NOT NULL,$loi_10diem, loi_10diem)
             WHERE ten_lop = '".$ten_lop."'")){
                 echo "<script>alert('Sửa thành công!');</script>";
-            }else{echo "<script>alert('Sửa thất bại!');</script>";}
+            }
             if($conn -> query("UPDATE thiduatuan SET 
-            loi_20diem=IF($loi_20diem IF NOT NULL,$loi_20diem, loi_20diem)
+            loi_20diem=IF($loi_20diem IS NOT NULL,$loi_20diem, loi_20diem)
             WHERE ten_lop = '".$ten_lop."'")){
                 echo "<script>alert('Sửa thành công!');</script>";
-            }else{echo "<script>alert('Sửa thất bại!');</script>";}
+            }
+            
         }
+
 
     ?>
     <?php
 		if(isset($_POST["xoa"])){
 				$reset = mysqli_query($conn,"DELETE FROM thiduatuan");
+                include "users-misstake.php";
+				$conn->close();
             }
 	?>
     <div class="container">
         <h2>Sửa lỗi</h2>
+
         <form method="POST" action="">
             <div class="form-group">
-                <label for="id_lop">Lớp</label>
-                <input name="id_lop" class="form-control" placeholder="Tên lớp cần sửa (Nhập in hoa, ví dụ: 10A1)">
+                <label for="ten_lop">Lớp</label>
+                <input name="ten_lop" class="form-control" placeholder="Tên lớp cần sửa (Nhập in hoa, ví dụ: 10A1)">
             </div>
 
             <div class="form-group">
