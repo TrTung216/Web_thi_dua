@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loged</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    
 </head>
 <body>
     <?php
@@ -22,6 +23,10 @@
 	</form>
     <div>
         <a href="admin-fix.php" class="btn btn-info" role="button">Đến trang sửa lỗi</a>
+    </div>
+    <hr>
+    <div>
+        <a href="admin-save.php" class="btn btn-info" role="button">Xuất file Excell</a>
     </div>
     <hr>
     <div>
