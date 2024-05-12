@@ -1,3 +1,54 @@
+<?php
+session_start();
+require_once "class.database.php";
+
+// Kiểm tra nếu người dùng chưa đăng nhập, chuyển hướng về trang đăng nhập
+if (empty($_SESSION['id_lop'])) {
+    header('location:login.php');
+    exit;
+}
+
+// Kiểm tra nếu người dùng đã nhập dữ liệu trước đó, hiển thị thông báo và không cho phép nhập thêm
+$query_check = "SELECT * FROM thiduatuan WHERE ten_lop = '{$_SESSION['id_lop']}'";
+$result = $conn->query($query_check);
+if ($result && $result->num_rows > 0) {
+    echo "<script>
+                        alert('Bạn đã nhập dữ liệu rồi!');
+                        window.location.href = 'users-page.php';
+                      </script>";
+    exit;
+}
+
+// Xử lý khi người dùng gửi form
+if (isset($_POST["add"])) {
+    $ten_lop = $_SESSION['id_lop'];
+    $gio_tot = $_POST['gio_tot'];
+    $gio_tb = $_POST['gio_tb'];
+    $gio_yeu = $_POST['gio_yeu'];
+    $gio_kem = $_POST['gio_kem'];
+    $so_diem_gioi = $_POST['so_diem_gioi'];
+    $so_diem_yeu_kem = $_POST['so_diem_yeu_kem'];
+    $loi_2diem = $_POST['loi_2diem'];
+    $loi_5diem = $_POST['loi_5diem'];
+    $loi_10diem = $_POST['loi_10diem'];
+    $loi_20diem = $_POST['loi_20diem'];
+
+    // Thực hiện thêm dữ liệu vào database
+    $query_insert = "INSERT INTO thiduatuan (ten_lop,gio_tot,gio_tb,gio_yeu,gio_kem,so_diem_gioi,so_diem_yeu_kem,loi_2diem,loi_5diem,loi_10diem,loi_20diem) VALUES ('$ten_lop','$gio_tot','$gio_tb','$gio_yeu','$gio_kem','$so_diem_gioi','$so_diem_yeu_kem','$loi_2diem','$loi_5diem','$loi_10diem','$loi_20diem')";
+
+    if ($conn->query($query_insert)) {
+        echo "<script>
+                        alert('Lưu thành công!');
+                        window.location.href = 'users-page.php';
+                      </script>";
+        exit;
+    } else {
+        echo "<script>alert('Lưu thất bại!');</script>";
+    }
+
+    $conn->close();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,42 +59,10 @@
     <title>Bảng Thi Đua</title>
 </head>
 <body>
-    <?php require_once "class.database.php"?>
-    
-    <?php
-        session_start();
-        if(empty($_SESSION['id_lop'])){
-            header('location:login.php');
-        }
-    ?>
-    <h2>Chi Đoàn <?php echo $_SESSION['id_lop'];?></h2>
-    <?php
-        if(isset($_POST["add"])){
-            $ten_lop= $_SESSION['id_lop'];
-            $gio_tot=$_POST['gio_tot'];
-            $gio_tb=$_POST['gio_tb'];
-            $gio_yeu=$_POST['gio_yeu'];
-            $gio_kem=$_POST['gio_kem'];
-            $so_diem_gioi=$_POST['so_diem_gioi'];
-            $so_diem_yeu_kem=$_POST['so_diem_yeu_kem'];
-            $loi_2diem=$_POST['loi_2diem'];
-            $loi_5diem=$_POST['loi_5diem'];
-            $loi_10diem=$_POST['loi_10diem'];
-            $loi_20diem=$_POST['loi_20diem'];
-
-            if($conn -> query("INSERT INTO thiduatuan (ten_lop,gio_tot,gio_tb,gio_yeu,gio_kem,so_diem_gioi,so_diem_yeu_kem,loi_2diem,loi_5diem,loi_10diem,loi_20diem) VALUE (N'$ten_lop',N'$gio_tot',N'$gio_tb',N'$gio_yeu',N'$gio_kem',N'$so_diem_gioi',N'$so_diem_yeu_kem',N'$loi_2diem',N'$loi_5diem',N'$loi_10diem',N'$loi_20diem')")){
-                echo "<script>alert('Lưu thành công!');</script>";
-            }else{
-                echo "<script>alert('Lưu thất bại!');</script>";
-            }
-
-        }
-
-        $conn->close();
-    ?>
+    <h2>Chi Đoàn <?php echo $_SESSION['id_lop']; ?></h2>
     <div class="container">
         <form method="POST" action="">
-
+            <!-- Các trường nhập dữ liệu -->
             <div class="form-group">
                 <label for="gio_tot">Giờ tốt</label>
                 <input name="gio_tot" class="form-control" placeholder="Nếu 100% giờ tốt nhập 1, không 100% nhập 0.">
@@ -85,12 +104,6 @@
                 <input name="loi_20diem" class="form-control" placeholder="Gian lận, đánh nhau, hút thuốc, trộm cắp, phá hoại tài sản chung, vi phạm ATGT, gửi xe ngoài,...">
             </div>
             <button type="submit" class="btn btn-primary" name="add">Lưu</button>
-            <div>
-                <a href="logout.php" class="btn btn-info" role="button">Đăng xuất</a>
-            </div>
-            <div>
-                <a href="users-misstake.php" class="btn btn-info" role="button">Báo nhập sai!</a>
-            </div>
         </form>
     </div>
 </body>
