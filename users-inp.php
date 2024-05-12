@@ -34,9 +34,11 @@ if (isset($_POST["add"])) {
     $loi_20diem = $_POST['loi_20diem'];
 
     // Thực hiện thêm dữ liệu vào database
-    $query_insert = "INSERT INTO thiduatuan (ten_lop,gio_tot,gio_tb,gio_yeu,gio_kem,so_diem_gioi,so_diem_yeu_kem,loi_2diem,loi_5diem,loi_10diem,loi_20diem) VALUES ('$ten_lop','$gio_tot','$gio_tb','$gio_yeu','$gio_kem','$so_diem_gioi','$so_diem_yeu_kem','$loi_2diem','$loi_5diem','$loi_10diem','$loi_20diem')";
+    $diem_tong = 100 + $gio_tot * 20 - $gio_tb * 2 - $gio_yeu * 5 - $gio_kem * 10 + $so_diem_gioi * 2 - $so_diem_yeu_kem * 2 - $loi_2diem * 2 - $loi_5diem * 5 - $loi_10diem * 10 - $loi_20diem * 20;
+    $query_insert = "INSERT INTO thiduatuan (ten_lop,gio_tot,gio_tb,gio_yeu,gio_kem,so_diem_gioi,so_diem_yeu_kem,loi_2diem,loi_5diem,loi_10diem,loi_20diem,diem_tong) VALUES ('$ten_lop','$gio_tot','$gio_tb','$gio_yeu','$gio_kem','$so_diem_gioi','$so_diem_yeu_kem','$loi_2diem','$loi_5diem','$loi_10diem','$loi_20diem','$diem_tong')";
 
     if ($conn->query($query_insert)) {
+        
         echo "<script>
                         alert('Lưu thành công!');
                         window.location.href = 'users-page.php';
