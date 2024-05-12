@@ -1,6 +1,6 @@
 <?php
     session_start();
-    date_default_timezone_set('Asia/Bangkok');
+    #date_default_timezone_set('Asia/Bangkok');
     #$list= timezone_identifiers_list();
     #print_r(getdate());
     $_SESSION['thu']=date('w');
