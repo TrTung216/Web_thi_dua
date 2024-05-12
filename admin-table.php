@@ -34,7 +34,8 @@ $result=mysqli_query($conn,"SELECT * FROM thiduatuan");
 						<th>Số lỗi trừ 2 điểm</th>
 						<th>Số lỗi trừ 5 điểm</th>
 						<th>Số lỗi trừ 10 điểm</th>
-						<th>Số lỗi trừ 20 điểm</th>   						
+						<th>Số lỗi trừ 20 điểm</th>
+						<th>Điểm tổng</th>  						
 					</tr>
 				</thead>
 			   
@@ -52,6 +53,7 @@ $result=mysqli_query($conn,"SELECT * FROM thiduatuan");
 						<td><?=$row['loi_5diem']?></td>
 						<td><?=$row['loi_10diem']?></td>
 						<td><?=$row['loi_20diem']?></td>
+						<td><?=$row['diem_tong']?></td>
 					</tr>
 					<?php endwhile; ?>
 				  
